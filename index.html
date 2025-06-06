@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agua Pura San Pedro - Sistema de Gestión</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Agua Pura San Pedro</h1>
+        <p>Sistema de Gestión y Análisis de Ventas</p>
+      </div>
+
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('dashboard')">
+          📊 Dashboard
+        </button>
+        <button class="nav-tab" onclick="showTab('ventas')">
+          💵 Registrar Venta
+        </button>
+        <button class="nav-tab" onclick="showTab('inventario')">
+          📦 Inventario
+        </button>
+        <button class="nav-tab" onclick="showTab('reportes')">
+          📈 Reportes
+        </button>
+        <button class="nav-tab" onclick="showTab('historial')">
+          📋 Historial
+        </button>
+      </div>
+
+      <!-- Dashboard Tab -->
+      <div id="dashboard" class="tab-content active">
+        <h2>Panel de Control</h2>
+        <div style="margin-top: 20px" class="stats-grid">
+          <div class="stat-card">
+            <h3 id="ventasHoy">0</h3>
+            <p>Ventas Hoy</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="ingresosMes">Q0</h3>
+            <p>Ingresos del Mes</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="productosStock">0</h3>
+            <p>Productos en Stock</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="clientesAtendidos">0</h3>
+            <p>Clientes Atendidos</p>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <h3>Ventas de los Últimos 7 Días</h3>
+          <canvas id="ventasChart" width="400" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- Ventas Tab -->
+      <div id="ventas" class="tab-content">
+        <h2>Registrar Nueva Venta</h2>
+        <hr style="margin-top: 20px" />
+        <form style="margin-top: 20px" id="ventaForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fechaVenta">Fecha:</label>
+              <input type="date" id="fechaVenta" required />
+            </div>
+            <div class="form-group">
+              <label for="tipoProducto">Producto:</label>
+              <select id="tipoProducto" required>
+                <option value="">Seleccionar producto</option>
+                <option value="garrafon20L">Garrafón 20L</option>
+                <option value="garrafon10L">Garrafón 10L</option>
+                <option value="botella1L">Botella 1L</option>
+                <option value="botella500ml">Botella 500ml</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cantidad">Cantidad:</label>
+              <input type="number" id="cantidad" min="1" required />
+            </div>
+            <div class="form-group">
+              <label for="precioUnitario">Precio Unitario (Q):</label>
+              <input
+                type="number"
+                id="precioUnitario"
+                step="0.01"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cliente">Cliente (opcional):</label>
+              <input
+                type="text"
+                id="cliente"
+                placeholder="Nombre del cliente"
+              />
+            </div>
+            <div class="form-group">
+              <label for="metodoPago">Método de Pago:</label>
+              <select id="metodoPago" required>
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta</option>
+                <option value="transferencia">Transferencia</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notas">Notas (opcional):</label>
+            <textarea
+              id="notas"
+              rows="3"
+              placeholder="Observaciones adicionales"
+            ></textarea>
+          </div>
+          <div style="text-align: end">
+            <button type="submit" class="btn"><i class="bi bi-cart-check"></i> Registrar Venta</button>
+          </div>
+        </form>
+        <div id="ventaAlert"></div>
+      </div>
+
+      <!-- Inventario Tab -->
+      <div id="inventario" class="tab-content">
+        <h2>Gestión de Inventario</h2>
+        <hr style="margin-top: 20px" />
+        <form style="margin-top: 20px" id="inventarioForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productoInventario">Producto:</label>
+              <select id="productoInventario" required>
+                <option value="garrafon20L">Garrafón 20L</option>
+                <option value="garrafon10L">Garrafón 10L</option>
+                <option value="botella1L">Botella 1L</option>
+                <option value="botella500ml">Botella 500ml</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="stockActual">Stock Actual:</label>
+              <input type="number" id="stockActual" min="0" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="stockMinimo">Stock Mínimo:</label>
+              <input type="number" id="stockMinimo" min="0" required />
+            </div>
+            <div class="form-group">
+              <label for="costoUnitario">Costo Unitario (Q):</label>
+              <input
+                type="number"
+                id="costoUnitario"
+                step="0.01"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+          <div style="text-align: end">
+            <button type="submit" class="btn"><i class="bi bi-arrow-clockwise"></i> Actualizar Inventario</button>
+          </div>
+        </form>
+
+        <div class="table-container" style="margin-top: 30px">
+          <table id="inventarioTable">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Stock Actual</th>
+                <th>Stock Mínimo</th>
+                <th>Costo Unit.</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="inventarioAlert"></div>
+      </div>
+
+      <!-- Reportes Tab -->
+      <div id="reportes" class="tab-content">
+        <h2>Reportes y Análisis</h2>
+        <hr style="margin-top: 20px" />
+        <div  class="filters" style="margin-top: 20px">
+          <h4>Filtros de Reporte</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fechaInicio">Fecha Inicio:</label>
+              <input type="date" id="fechaInicio" />
+            </div>
+            <div class="form-group">
+              <label for="fechaFin">Fecha Fin:</label>
+              <input type="date" id="fechaFin" />
+            </div>
+            <div class="form-group">
+              <label for="tipoReporte">Tipo de Reporte:</label>
+              <select id="tipoReporte">
+                <option value="ventas">Ventas por Producto</option>
+                <option value="ingresos">Ingresos Diarios</option>
+                <option value="clientes">Análisis de Clientes</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn" onclick="generarReporte()">
+            <i class="bi bi-clipboard2-data"></i> Generar Reporte
+          </button>
+        </div>
+
+        <div class="chart-container">
+          <h3 id="reporteTitle">Selecciona un período para generar reporte</h3>
+          <canvas id="reporteChart" width="400" height="200"></canvas>
+        </div>
+
+        <div id="reporteStats" class="stats-grid" style="display: none">
+          <div class="stat-card">
+            <h3 id="totalVentasReporte">0</h3>
+            <p>Total Ventas</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="totalIngresosReporte">Q0</h3>
+            <p>Total Ingresos</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="promedioVentas">Q0</h3>
+            <p>Promedio por Venta</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="productoMasVendido">-</h3>
+            <p>Producto Más Vendido</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historial Tab -->
+      <div id="historial" class="tab-content">
+        <h2>Historial de Ventas</h2>
+        <div class="table-container">
+          <table id="historialTable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unit.</th>
+                <th>Total</th>
+                <th>Cliente</th>
+                <th>Método Pago</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
