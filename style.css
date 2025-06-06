@@ -315,3 +315,12 @@ color: #495057;
         grid-template-columns: 1fr;
     }
 }
+
+.logo-container {
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: 230px;
+  width: 240px;
+}
