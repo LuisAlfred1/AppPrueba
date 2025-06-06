@@ -2,16 +2,10 @@
 let ventas = JSON.parse(localStorage.getItem("ventas") || "[]") || [];
 let inventario = JSON.parse(localStorage.getItem("inventario") || "{}") || {
   garrafon20L: { stock: 50, minimo: 10, costo: 15.0 },
-  garrafon10L: { stock: 30, minimo: 8, costo: 8.0 },
-  botella1L: { stock: 100, minimo: 20, costo: 2.5 },
-  botella500ml: { stock: 200, minimo: 50, costo: 1.5 },
 };
 
 const productosNombres = {
   garrafon20L: "Garrafón 20L",
-  garrafon10L: "Garrafón 10L",
-  botella1L: "Botella 1L",
-  botella500ml: "Botella 500ml",
 };
 
 // Inicializar aplicación
@@ -267,19 +261,17 @@ function generarReporte() {
         ).toFixed(2)
       : "0.00");
 
-  // Producto más vendido
-  const ventasPorProducto = {};
+  // Cliente más frecuente
+  const ventasPorCliente = {};
   ventasFiltradas.forEach((v) => {
-    ventasPorProducto[v.producto] =
-      (ventasPorProducto[v.producto] || 0) + v.cantidad;
+    ventasPorCliente[v.cliente] = (ventasPorCliente[v.cliente] || 0) + 1;
   });
-  const productoMasVendido = Object.keys(ventasPorProducto).reduce(
-    (a, b) => (ventasPorProducto[a] > ventasPorProducto[b] ? a : b),
+  const clienteMasFrecuente = Object.keys(ventasPorCliente).reduce(
+    (a, b) => (ventasPorCliente[a] > ventasPorCliente[b] ? a : b),
     ""
   );
-  document.getElementById("productoMasVendido").textContent = productoMasVendido
-    ? productosNombres[productoMasVendido]
-    : "N/A";
+  document.getElementById("clientesFrecuentes").textContent =
+    clienteMasFrecuente || "N/A";
 
   // Generar gráfico según el tipo de reporte
   actualizarGraficoReporte(ventasFiltradas, tipoReporte, fechaInicio, fechaFin);

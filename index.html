@@ -23,8 +23,10 @@
               class="logo-img"
           /></a>
         </div>
-        
-        <p style="font-weight: 700; font-size: 22px;">Sistema de Gestión y Análisis de Ventas</>
+
+        <p style="font-weight: 700; font-size: 22px">
+          Sistema de Gestión y Análisis de Ventas
+        </p>
       </div>
 
       <div class="nav-tabs">
@@ -59,7 +61,7 @@
           </div>
           <div class="stat-card">
             <h3 id="productosStock">0</h3>
-            <p>Productos en Stock</p>
+            <p>Garrafones en Stock</p>
           </div>
           <div class="stat-card">
             <h3 id="clientesAtendidos">0</h3>
@@ -86,11 +88,7 @@
             <div class="form-group">
               <label for="tipoProducto">Producto:</label>
               <select id="tipoProducto" required>
-                <option value="">Seleccionar producto</option>
                 <option value="garrafon20L">Garrafón 20L</option>
-                <option value="garrafon10L">Garrafón 10L</option>
-                <option value="botella1L">Botella 1L</option>
-                <option value="botella500ml">Botella 500ml</option>
               </select>
             </div>
           </div>
@@ -155,9 +153,6 @@
               <label for="productoInventario">Producto:</label>
               <select id="productoInventario" required>
                 <option value="garrafon20L">Garrafón 20L</option>
-                <option value="garrafon10L">Garrafón 10L</option>
-                <option value="botella1L">Botella 1L</option>
-                <option value="botella500ml">Botella 500ml</option>
               </select>
             </div>
             <div class="form-group">
@@ -223,7 +218,9 @@
             <div class="form-group">
               <label for="tipoReporte">Tipo de Reporte:</label>
               <select id="tipoReporte">
+                <!--
                 <option value="ventas">Ventas por Producto</option>
+                -->
                 <option value="ingresos">Ingresos Diarios</option>
                 <option value="clientes">Análisis de Clientes</option>
               </select>
@@ -253,8 +250,8 @@
             <p>Promedio por Venta</p>
           </div>
           <div class="stat-card">
-            <h3 id="productoMasVendido">-</h3>
-            <p>Producto Más Vendido</p>
+            <h3 id="clientesFrecuentes">-</h3>
+            <p>Clientes más frecuentes</p>
           </div>
         </div>
       </div>
